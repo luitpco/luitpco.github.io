@@ -326,7 +326,7 @@ send.disabled=true;send.textContent='Sending…';say('');
 try{const r=await fetch('https://formsubmit.co/ajax/marc.tapangco@gmail.com',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({name:d.name.trim(),email:d.email.trim(),message:d.message.trim(),_replyto:d.email.trim(),_subject:'New portfolio message from '+d.name.trim(),_template:'table',_captcha:'false'})});
 const j=await r.json().catch(()=>({}));
 if(r.ok&&String(j.success)==='true'){try{localStorage.setItem(key(d.email),today())}catch(_){}f.reset();say('Thanks! Your message was sent to Louie.','ok');send.textContent='Sent';return}
-throw new Error(j.message||'Send failed')}catch(err){say('Sorry, the message could not be sent. Please email directly below.','err');send.disabled=false;send.textContent='Send me a message'}});
+throw new Error(j.message||'Send failed')}catch(err){console.warn('Message form:',err&&err.message);send.disabled=false;send.textContent='Send me a message';if(/activat/i.test(err&&err.message||''))say('This form is still being set up. Please try again later or email directly below.','err');else say('Sorry, the message could not be sent. Please email directly below.','err')}});
 const c=document.getElementById('copy');
 c.addEventListener('click',async()=>{try{await navigator.clipboard.writeText('marc.tapangco@gmail.com');c.textContent='Copied!'}catch(_){c.textContent='marc.tapangco@gmail.com'}setTimeout(()=>c.textContent='Copy Email',1800)});
 }
