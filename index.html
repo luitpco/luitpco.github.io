@@ -57,16 +57,11 @@ main{display:flex;flex-direction:column;gap:160px}
 /* carousel */
 .sec{display:flex;flex-direction:column;gap:24px}
 .sechead .tag:last-child{white-space:nowrap}.sechead{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.prog{position:relative;height:2px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:-8px}
-.prog i{display:block;height:100%;width:100%;background:var(--acc2);transform-origin:left;transform:scaleX(0);animation:pfill 6s linear forwards}
-.prog.paused i{animation-play-state:paused}
-@keyframes pfill{to{transform:scaleX(1)}}
-@keyframes inR{from{opacity:0;transform:translateX(56px)}}
-@keyframes inL{from{opacity:0;transform:translateX(-56px)}}
-@keyframes gfade{from{opacity:0}}
-.track.dn>.main{animation:inR .65s cubic-bezier(.2,.75,.2,1)}
-.track.dp>.main{animation:inL .65s cubic-bezier(.2,.75,.2,1)}
-.track.dn>.ghost,.track.dp>.ghost{animation:gfade .65s ease}
+.marq{overflow:hidden;margin:0 -8px;padding:8px 0 24px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.belt{display:flex;align-items:flex-start;width:max-content;animation:marq 42s linear infinite}
+.marq:hover .belt,.marq:focus-within .belt,.marq.hold .belt{animation-play-state:paused}
+.belt>.main{flex:none;width:clamp(290px,46vw,540px);margin:0 12px}
+@keyframes marq{to{transform:translateX(-50%)}}
 .track{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px;align-items:stretch}
 .ghost{grid-column:span 3;background:rgba(18,18,18,.6);border:1px solid rgba(255,255,255,.05);border-radius:24px;padding:25px;opacity:.4;display:flex;flex-direction:column;justify-content:space-between;min-height:290px;cursor:pointer;text-align:left;color:inherit;font:inherit;transition:opacity .2s}
 .ghost:hover,.ghost:focus-visible{opacity:.7;outline:none}
@@ -194,7 +189,7 @@ footer a b{color:var(--acc2);font-weight:400}
 @media(max-width:900px){.right{display:none}}
 @media(max-width:760px){.region{display:none}nav{order:3;width:100%;gap:20px}.main{flex-direction:column;padding:20px}.art{min-height:200px;flex-basis:auto}.r{grid-template-columns:minmax(0,1fr);gap:6px}.r .w{align-items:flex-start}.creds{grid-template-columns:minmax(0,1fr)}.l2{flex-direction:column-reverse;align-items:flex-start;gap:20px;padding-left:0}.sub{flex-direction:column}.card.row{align-items:flex-start}}
 @media(max-width:520px){header{gap:6px;padding:12px 0}.brand span{display:none}nav{gap:18px;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap;margin-right:-16px;padding-right:16px}nav::-webkit-scrollbar{display:none}nav a{font-size:13px;padding:6px 0;white-space:nowrap;flex:none}html{scroll-padding-top:96px}.big h1{font-size:clamp(28px,9vw,52px)}.workhead{flex-direction:column-reverse;align-items:flex-start}.workhead h2{font-size:clamp(28px,9vw,44px)}.wrap{padding:20px 16px 48px;gap:72px}main{gap:88px}.contact{padding:48px 20px 32px}.right .pill{display:none}}
-@media(prefers-reduced-motion:reduce){.prog{display:none}*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+@media(prefers-reduced-motion:reduce){.marq{overflow-x:auto;-webkit-mask-image:none;mask-image:none}.belt>.clone{display:none}*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body id="top">
@@ -226,9 +221,8 @@ footer a b{color:var(--acc2);font-weight:400}
 </section>
 
 <section class="sec" id="projects">
-  <div class="sechead"><p class="tag"><b>...</b>/Featured Selected Work ...</p><p class="tag" id="count">[01 — 03]</p></div>
-  <div class="track" id="track"></div>
-  <div class="prog" aria-hidden="true"><i id="bar"></i></div>
+  <div class="sechead"><p class="tag"><b>...</b>/Featured Selected Work ...</p><p class="tag" id="count">[03 projects]</p></div>
+  <div class="marq" id="marq"><div class="belt" id="track"></div></div>
 </section>
 
 <section class="sec" id="about" style="gap:48px">
@@ -316,20 +310,10 @@ const torus=`<svg viewBox="0 0 128 128" fill="none" aria-hidden="true"><defs><li
 const pad=n=>String(n+1).padStart(2,'0');
 const track=document.getElementById('track'),count=document.getElementById('count');
 const ghost=(j,dir)=>{const p=P[j];return `<button class="ghost" data-go="${dir}" aria-label="${dir<0?'Previous':'Next'} project: ${p.t}"><div><p class="k">${pad(j)} / ${p.k}${p.cap?' <span class="capg">★</span>':''}</p><h3>${p.t}<br>${p.sub}</h3><p>${p.d}</p></div><p class="nav">${dir<0?'← Previous Case':'Next Case →'}</p></button>`};
-const bar=document.getElementById('bar'),prog=bar.parentElement;let hov=false,foc=false,off=true;
-const upd=()=>prog.classList.toggle('paused',hov||foc||open||off||document.hidden);
-const render=(d)=>{const p=P[i],n=P.length;
- track.innerHTML=ghost((i+n-1)%n,-1)+`<article class="main${p.cap?' capc':''}${p.img?' hasimg':''}">${p.img?(p.url?`<a class="art shot" href="${p.url}" target="_blank" rel="noopener" aria-label="Open the ${p.t} landing page"><img src="${p.img}" alt="${p.t} landing page" loading="lazy"><span class="chip">${p.chip}</span><span class="live">Live site ↗</span>`:`<div class="art shot"><img src="${p.img}" alt="${p.t} project thumbnail" loading="lazy">${p.nochip?'':`<span class="chip">${p.chip}</span>`}`):`<div class="art">${torus}<span class="chip">${p.chip}</span>`}${p.cap?'<span class="capb">★ Capstone</span>':''}${p.img&&p.url?'</a>':'</div>'}<div class="body"><div><p class="kick">${p.cap?'Featured capstone project':'Featured '+p.k}</p><h3>${p.t}: ${p.sub}</h3><p class="role">${p.role}</p>${open?`<ul>${p.b.map(x=>`<li>${x}</li>`).join('')}</ul>`:`<p>${p.d}</p>`}<div class="tags">${p.tags.map(x=>`<span>${x}</span>`).join('')}</div></div><div class="acts"><button class="btn" id="more" aria-expanded="${open}">${open?'Show less':'Read more'}</button>${p.url?`<a class="btn ghostbtn" href="${p.url}" target="_blank" rel="noopener">Visit site ↗</a>`:''}<button class="nb" data-go="1" aria-label="Next project"><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><path d="M18.2441 15.248C18.0215 14.9863 17.7891 14.6016 17.5469 14.0938H17.9688C18.4648 14.6758 18.9922 15.1094 19.5508 15.3945V15.6055C18.9922 15.8906 18.4648 16.3242 17.9688 16.9062H17.5469C17.7891 16.3984 18.0215 16.0137 18.2441 15.752H12.4492V15.248H18.2441Z" fill="#fff"/></svg></button></div></div></article>`+ghost((i+1)%n,1);
- count.textContent=`[${pad(i)} — ${pad(n-1)}]`;
- {const ae=document.activeElement;foc=track.contains(ae)&&ae.matches(':focus-visible')}
- track.classList.remove('dn','dp');if(d){void track.offsetWidth;track.classList.add(d>0?'dn':'dp')}
- if(d!==undefined||!open){bar.style.animation='none';void bar.offsetWidth;bar.style.animation=''}upd();};
-const go=d=>{i=(i+d+P.length)%P.length;open=false;render(d)};
-track.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){go(+g.dataset.go);return}if(e.target.closest('#more')){open=!open;render()}});
-bar.addEventListener('animationend',()=>go(1));
-track.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'){hov=true;upd()}});track.addEventListener('pointerleave',()=>{hov=false;upd()});
-track.addEventListener('focusin',e=>{foc=e.target.matches(':focus-visible');upd()});track.addEventListener('focusout',e=>{if(!track.contains(e.relatedTarget)){foc=false;upd()}});
-new IntersectionObserver(es=>{off=!es[0].isIntersecting;upd()},{threshold:.3}).observe(track);document.addEventListener('visibilitychange',upd);
+const marq=document.getElementById('marq'),opened=new Set();
+const card=(p,j,clone)=>{const o=opened.has(j);return `<article class="main${p.cap?' capc':''}${p.img?' hasimg':''}${clone?' clone':''}" data-j="${j}"${clone?' aria-hidden="true" inert':''}>${p.img?(p.url?`<a class="art shot" href="${p.url}" target="_blank" rel="noopener" aria-label="Open the ${p.t} landing page"><img src="${p.img}" alt="${p.t} landing page" loading="lazy"><span class="chip">${p.chip}</span><span class="live">Live site ↗</span>`:`<div class="art shot"><img src="${p.img}" alt="${p.t} project thumbnail" loading="lazy">${p.nochip?'':`<span class="chip">${p.chip}</span>`}`):`<div class="art">${torus}<span class="chip">${p.chip}</span>`}${p.cap?'<span class="capb">★ Capstone</span>':''}${p.img&&p.url?'</a>':'</div>'}<div class="body"><div><p class="kick">${pad(j)} / ${p.cap?'Capstone project':p.k}</p><h3>${p.t}: ${p.sub}</h3><p class="role">${p.role}</p>${o?`<ul>${p.b.map(x=>`<li>${x}</li>`).join('')}</ul>`:`<p>${p.d}</p>`}<div class="tags">${p.tags.map(x=>`<span>${x}</span>`).join('')}</div></div><div class="acts"><button class="btn more" aria-expanded="${o}">${o?'Show less':'Read more'}</button>${p.url?`<a class="btn ghostbtn" href="${p.url}" target="_blank" rel="noopener">Visit site ↗</a>`:''}</div></div></article>`};
+const render=()=>{track.innerHTML=P.map((p,j)=>card(p,j,0)).join('')+P.map((p,j)=>card(p,j,1)).join('');marq.classList.toggle('hold',opened.size>0)};
+track.addEventListener('click',e=>{const m=e.target.closest('.more');if(!m)return;const j=+m.closest('[data-j]').dataset.j;opened.has(j)?opened.delete(j):opened.add(j);render();const b=track.querySelector(`.main:not(.clone)[data-j="${j}"] .more`);b&&b.focus({preventScroll:true})});
 render();
 const links=[...document.querySelectorAll('nav a')];const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
 const spy=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}})},{rootMargin:'-45% 0px -50% 0px'});secs.forEach(s=>spy.observe(s));
