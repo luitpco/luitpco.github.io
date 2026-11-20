@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marc Louie Tapangco · luitpco</title>
+<meta name="description" content="Portfolio of Marc Louie Tapangco, BS Information Technology student and full-stack developer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Built from TYN's Figma template (node 1:2): near-black ground, maroon #800020 accent,
+   Syne display + JetBrains Mono labels + Inter body, wireframe rings behind the hero. */
+:root{color-scheme:dark;--bg:#0d0d0d;--card:#141414;--card2:#1e1e1e;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.1);--acc:#800020;--acc2:#c2183f;--t1:#fff;--t2:#f5f5f5;--t3:#d4d4d4;--t4:#a3a3a3;--t5:#737373;--syne:"Syne",Inter,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+*{box-sizing:border-box;min-width:0}
+html{overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;color:var(--t1);font:16px/1.5 Inter,system-ui,sans-serif;overflow-x:clip;background:radial-gradient(circle at 85% 15%,rgba(128,0,32,.08),rgba(128,0,32,0) 28%),radial-gradient(circle at 10% 85%,rgba(128,0,32,.05),rgba(128,0,32,0) 28%),var(--bg);position:relative}
+a{color:inherit;text-decoration:none}
+p{margin:0}
+h1,h2,h3{margin:0;font-weight:inherit}
+.rings{position:absolute;inset:0 0 auto 0;height:1300px;overflow:hidden;pointer-events:none;z-index:0}
+.rings svg{position:absolute}
+.r1{right:-192px;top:-120px;width:850px;height:850px;opacity:.8}
+.r2{left:-256px;top:384px;width:950px;height:950px;opacity:.5}
+.wrap{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:32px 64px 80px;display:flex;flex-direction:column;gap:128px}
+.mono{font-family:var(--mono)}
+.tag{font:400 12px/16px var(--mono);color:var(--t5)}
+.tag b{color:var(--acc2);font-weight:400;margin-right:8px}
+/* header */
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:25px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand b{display:block;font:700 18px/28px var(--syne);letter-spacing:-.45px}
+.brand span{font:400 12px/16px var(--mono);color:#888;letter-spacing:.6px;text-transform:uppercase}
+nav{display:flex;gap:32px;align-items:center}
+nav a{font:500 14px/20px Inter;color:var(--t4);letter-spacing:.35px;display:flex;align-items:center;gap:6px;padding:10px 0}
+nav a:hover,nav a:focus-visible{color:#fff;outline:none}
+nav a.on::after{content:"";width:6px;height:6px;border-radius:9px;background:var(--acc)}
+.right{display:flex;align-items:center;gap:16px}
+.pill{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line2);border-radius:999px;padding:7px 15px;font:400 11px/16px var(--mono);color:var(--t3)}
+.dot{width:8px;height:8px;border-radius:9px;background:var(--acc);position:relative}
+.dot::after{content:"";position:absolute;inset:0;border-radius:9px;background:var(--acc);animation:ping 1.6s cubic-bezier(0,0,.2,1) infinite}
+@keyframes ping{75%,100%{transform:scale(2.2);opacity:0}}
+.region{font:400 12px/16px var(--mono);color:var(--t5);letter-spacing:1.2px;padding-left:8px}
+main{display:flex;flex-direction:column;gap:160px}
+/* hero */
+.hero{padding-top:48px;display:flex;flex-direction:column;gap:24px}
+.big{display:flex;flex-direction:column;gap:16px}
+.big h1{font:800 clamp(40px,9.3vw,106px)/1 var(--syne);letter-spacing:-.025em;display:flex;flex-direction:column;gap:16px}
+.l1{display:flex;align-items:center;gap:clamp(16px,4vw,48px);flex-wrap:wrap}
+.l2{color:var(--t2);display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;padding-left:clamp(0px,2vw,24px)}
+.cta{display:inline-flex;align-items:center;gap:10px;background:#fff;color:#000;border-radius:999px;padding:10px 12px 10px 24px;font:500 14px/20px Inter;letter-spacing:0;box-shadow:0 4px 6px -1px rgba(255,255,255,.05);flex:none;white-space:nowrap;transition:transform .2s,box-shadow .2s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px -6px rgba(128,0,32,.6)}
+.cta:focus-visible,.btn:focus-visible,.soc a:focus-visible,.nb:focus-visible{outline:2px solid var(--acc2);outline-offset:3px}
+.mission{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding-top:25px;border-top:1px solid var(--line);flex-wrap:wrap;margin-top:40px}
+.mission p{max-width:448px;color:var(--t4)}
+.soc{display:flex;flex-wrap:wrap;gap:10px}
+.soc a{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line2);border-radius:999px;padding:9px 17px;font:400 12px/16px var(--mono);color:var(--t3);min-height:36px}
+.soc a:hover{border-color:rgba(255,255,255,.25);color:#fff}
+/* carousel */
+.sec{display:flex;flex-direction:column;gap:24px}
+.sechead{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.track{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px;align-items:start}
+.ghost{grid-column:span 3;background:rgba(18,18,18,.6);border:1px solid rgba(255,255,255,.05);border-radius:24px;padding:25px;opacity:.4;display:flex;flex-direction:column;justify-content:space-between;min-height:290px;cursor:pointer;text-align:left;color:inherit;font:inherit;transition:opacity .2s}
+.ghost:hover,.ghost:focus-visible{opacity:.7;outline:none}
+.ghost .k{font:400 11px/16.5px var(--mono);color:var(--t5);text-transform:uppercase}
+.ghost h3{font:700 20px/28px var(--syne);margin:8px 0}
+.ghost p{font-size:12px;line-height:16px;color:var(--t4);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ghost .nav{font:400 12px/16px var(--mono);color:var(--t4);padding-top:30px}
+.main{grid-column:span 6;background:var(--card);border:1px solid var(--line2);border-radius:24px;padding:33px;display:flex;gap:24px;min-height:378px;box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
+.art{flex:0 0 42%;border:1px solid rgba(255,255,255,.05);border-radius:16px;background:linear-gradient(59deg,#1b080f 0%,#240a15 50%,rgba(128,0,32,.4) 100%);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:250px}
+.art::before{content:"";position:absolute;left:30%;top:30%;width:51px;height:51px;border-radius:50%;background:radial-gradient(rgba(255,255,255,.15),rgba(255,255,255,0) 70%)}
+.art svg{width:128px;height:128px;animation:spin 18s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.main.capc{border-color:rgba(194,24,63,.55);box-shadow:0 0 0 1px rgba(128,0,32,.35),0 25px 60px -12px rgba(128,0,32,.45)}
+.capb{position:absolute;top:12px;left:12px;background:var(--acc);color:#fff;border-radius:999px;padding:4px 10px;font:500 10px/14px var(--mono);letter-spacing:.6px;text-transform:uppercase;box-shadow:0 4px 14px rgba(128,0,32,.5)}
+.capg{color:var(--acc2)}
+.chip{position:absolute;left:12px;bottom:12px;background:rgba(0,0,0,.6);backdrop-filter:blur(12px);border:1px solid var(--line2);border-radius:6px;padding:5px 11px;font:400 10px/15px var(--mono);color:var(--t3)}
+.body{flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:16px}
+.kick{font:500 12px/16px var(--mono);color:var(--acc2);letter-spacing:.6px;text-transform:uppercase}
+.body h3{font:700 24px/32px var(--syne);letter-spacing:-.6px;margin:6px 0}
+.body .role{font:400 12px/16px var(--mono);color:var(--t5);margin-bottom:8px}
+.body p{font-size:14px;line-height:20px;color:var(--t4)}
+.body ul{margin:0;padding-left:18px;font-size:13px;line-height:19px;color:var(--t4)}
+.body li+li{margin-top:6px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;padding-top:10px}
+.tags span{background:var(--card2);border:1px solid rgba(255,255,255,.05);border-radius:999px;padding:3px 11px;font:400 11px/16.5px var(--mono);color:var(--t3);white-space:nowrap}
+.acts{display:flex;align-items:center;gap:12px}
+.btn{background:#fff;color:#000;border:0;border-radius:999px;padding:8px 20px;font:600 12px/16px Inter;letter-spacing:.3px;cursor:pointer;min-height:36px}
+.nb{width:32px;height:32px;border-radius:50%;background:#1f1f1f;border:1px solid var(--line2);color:#fff;display:grid;place-items:center;cursor:pointer;padding:0}
+.nb:hover{background:#2a2a2a}
+/* about */
+.intro{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:32px;padding-bottom:41px;border-bottom:1px solid var(--line)}
+.intro .tag{grid-column:span 4}
+.intro h2{grid-column:span 8;font:600 clamp(26px,3vw,36px)/1.12 var(--syne);color:var(--t2);text-wrap:balance}
+.intro em{font-style:normal;font-weight:800;color:#fff;background:linear-gradient(transparent 68%,rgba(128,0,32,.85) 68%,rgba(128,0,32,.85) 92%,transparent 92%);padding:0 2px}
+.bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:32px;align-items:start}
+.stack{grid-column:span 7;display:flex;flex-direction:column;gap:16px}
+.card{background:var(--card);border:1px solid var(--line2);border-radius:16px;padding:25px;display:flex;flex-direction:column;gap:12px}
+.card.row{flex-direction:row;align-items:center;justify-content:space-between}
+.card h3{font:500 12px/16px var(--mono);color:var(--acc2);letter-spacing:.6px;text-transform:uppercase}
+.card p{font:400 14px/20px var(--mono);color:var(--t3)}
+.round{flex:none;width:40px;height:40px;border-radius:50%;background:#1d1d1d;border:1px solid var(--line2);display:grid;place-items:center;font-size:14px}
+.sub{display:flex;gap:16px;padding-top:4px}
+.sub>*{flex:1}
+.note{border:1px dashed var(--line2);border-radius:16px;padding:25px 21px;font:italic 400 12px/16px var(--mono);color:var(--t5);display:flex;align-items:center}
+.sub .card{padding:21px;gap:8px}
+.sub .card p{font-size:12px;line-height:16px}
+.portrait{grid-column:span 5;background:var(--card);border:1px solid var(--line2);border-radius:24px;padding:11px;box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
+.ph{position:relative;border-radius:16px;overflow:hidden;background:#171717;aspect-ratio:3/4}
+.ph img{width:100%;height:100%;object-fit:cover;object-position:50% 50%;filter:grayscale(1) contrast(1.05);display:block;transition:filter .4s}.ph:hover img{filter:none}
+.ph::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(13,13,13,.8),rgba(13,13,13,0) 50%)}
+.cap{position:absolute;z-index:1;left:16px;right:16px;bottom:16px;background:rgba(0,0,0,.7);backdrop-filter:blur(12px);border:1px solid var(--line2);border-radius:12px;padding:17px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cap b{display:block;font:500 12px/16px var(--mono);color:var(--acc2)}
+.cap span{font:400 11px/16.5px var(--mono);color:var(--t4)}
+.cap i{width:10px;height:10px;border-radius:50%;background:var(--acc);flex:none}
+/* work */
+.workhead{display:flex;align-items:flex-end;justify-content:space-between;padding-bottom:25px;border-bottom:1px solid var(--line);gap:16px}
+.workhead h2{font:800 clamp(48px,6vw,72px)/1 var(--syne);letter-spacing:-.025em;text-transform:uppercase}
+.rows{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.r{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,2fr);align-items:center;gap:16px;margin:0 -16px;padding:24px 16px;border-radius:12px;transition:background .2s,color .2s}
+.r+.r{border-top:1px solid var(--line)}
+.r .d{font:400 12px/16px var(--mono);color:var(--t3)}
+.r .dl{display:block;font:400 11px/16.5px var(--mono);color:var(--t5);margin-top:5px}
+.r .o{font:700 16px/24px var(--syne)}
+.r .w{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.r .w p{font:500 14px/20px Inter;color:#e5e5e5}
+.r .w p span{color:var(--t5);margin:0 8px}
+.r .w p small{font:500 12px/16px var(--mono);color:var(--t4)}
+.r .ar{flex:none;width:8px;height:8px;border-radius:50%;background:var(--acc);opacity:0;transform:scale(.4);transition:opacity .2s,transform .2s}
+.r:not(.hi):hover{background:rgba(255,255,255,.03)}
+.r:hover .ar{opacity:1;transform:none}
+.r.hi{background:#fff;color:#000;box-shadow:0 10px 15px -3px rgba(0,0,0,.1)}
+.r.hi .d{color:#171717;font-weight:500}.r.hi .dl{color:#525252}.r.hi .w p{color:#171717;font-weight:600}.r.hi .w p span{color:var(--t4)}.r.hi .w p small{color:#404040}
+.r.hi .ar{opacity:1;transform:none;width:10px;height:10px}
+.sum{display:flex;flex-direction:column;align-items:flex-end;gap:6px;font:400 12px/16px var(--mono);color:var(--t5)}
+.sum b{font-weight:500;color:var(--t3)}
+.creds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.creds ul{margin:0;padding:0;list-style:none;font:400 13px/20px var(--mono);color:var(--t3)}
+.creds li{padding:8px 0;border-top:1px solid var(--line)}
+.creds li:first-child{border-top:0;padding-top:0}
+.creds li small{display:block;color:var(--t5);font-size:11px}
+/* contact */
+.contact{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line2);border-radius:24px;padding:89px 57px 57px;display:flex;flex-direction:column;align-items:center;gap:32px;text-align:center}
+.contact::after{content:"";position:absolute;right:-80px;top:-80px;width:288px;height:288px;border-radius:50%;background:rgba(128,0,32,.2);filter:blur(64px);pointer-events:none}
+.contact .k{font:500 12px/16px var(--mono);color:var(--acc2);letter-spacing:1.2px;text-transform:uppercase}
+.contact h2{font:700 clamp(32px,4.5vw,48px)/1 var(--syne);letter-spacing:-.025em;margin:16px 0;text-wrap:balance}
+.contact p{color:var(--t4);max-width:600px;margin:0 auto}
+.mail{position:relative;z-index:1;display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--line2);border-radius:16px;padding:9px;flex-wrap:wrap;justify-content:center}
+.mail a{font:400 14px/20px var(--mono);color:var(--t3);padding:8px 16px;overflow-wrap:anywhere}
+.mail button{background:var(--acc);color:#fff;border:0;border-radius:12px;padding:10px 20px;font:500 12px/16px Inter;letter-spacing:.3px;cursor:pointer;min-height:40px}
+.mail button:hover{background:#9a0028}
+.meta{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;font:400 12px/16px var(--mono);color:var(--t5);text-transform:uppercase}
+footer{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:41px;border-top:1px solid var(--line);font:400 12px/16px var(--mono);color:var(--t5);flex-wrap:wrap}
+footer a b{color:var(--acc2);font-weight:400}
+@media(max-width:1000px){.wrap{padding:24px 32px 64px;gap:96px}main{gap:112px}nav{gap:20px}.ghost{display:none}.main{grid-column:1/-1}.intro .tag,.intro h2{grid-column:1/-1}.intro{gap:16px}.stack,.portrait{grid-column:1/-1}.portrait{max-width:440px}}
+@media(max-width:760px){.region{display:none}nav{order:3;width:100%;gap:20px}.main{flex-direction:column;padding:20px}.art{min-height:200px;flex-basis:auto}.r{grid-template-columns:minmax(0,1fr);gap:6px}.r .w{align-items:flex-start}.creds{grid-template-columns:minmax(0,1fr)}.l2{flex-direction:column-reverse;align-items:flex-start;gap:20px;padding-left:0}.sub{flex-direction:column}.card.row{align-items:flex-start}}
+@media(max-width:520px){.big h1{font-size:clamp(28px,9vw,52px)}.workhead{flex-direction:column-reverse;align-items:flex-start}.workhead h2{font-size:clamp(28px,9vw,44px)}.wrap{padding:20px 16px 48px;gap:72px}main{gap:88px}.contact{padding:48px 20px 32px}.right .pill{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body id="top">
+<div class="rings" aria-hidden="true">
+  <svg class="r1" viewBox="0 0 850 850" fill="none"><circle cx="425" cy="425" r="423.9" stroke="#fff" stroke-opacity=".05" stroke-width="1.06"/><circle cx="425" cy="425" r="276.25" stroke="#800020" stroke-opacity=".2" stroke-width="1.06" stroke-dasharray="4.25 2.1"/><circle cx="425" cy="425" r="148.75" stroke="#fff" stroke-opacity=".05" stroke-width="1.06"/></svg>
+  <svg class="r2" viewBox="0 0 950 950" fill="none"><circle cx="475" cy="475" r="474" stroke="#fff" stroke-opacity=".05"/><path d="M100 475C100 268.032 268.032 100 475 100C681.968 100 850 268.032 850 475" stroke="#800020" stroke-opacity=".15" stroke-width="1.2"/></svg>
+</div>
+<div class="wrap">
+<header>
+  <a class="brand" href="#top"><b>luitpco</b><span>IT Student / Full-stack Dev</span></a>
+  <nav aria-label="Main"><a href="#about">About</a><a href="#projects" class="on">Projects</a><a href="#experience">Experience</a><a href="#education">Education</a><a href="#orgs">Orgs</a><a href="#contact">Contact</a></nav>
+  <div class="right"><span class="pill"><span class="dot"></span>BSIT · Class of 2027</span><span class="region">EN / PH</span></div>
+</header>
+
+<main>
+<section class="hero">
+  <p class="tag"><b>...</b>/Overview &amp; Vision ...</p>
+  <div class="big">
+    <h1><span class="l1">Marc Louie</span><span class="l2"><a class="cta" href="#projects">Projects <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="12" fill="#800020"/><path d="M14.2441 11.248C14.0215 10.9863 13.7891 10.6016 13.5469 10.0938H13.9688C14.4648 10.6758 14.9922 11.1094 15.5508 11.3945V11.6055C14.9922 11.8906 14.4648 12.3242 13.9688 12.9062H13.5469C13.7891 12.3984 14.0215 12.0137 14.2441 11.752H8.44922V11.248H14.2441Z" fill="#fff"/></svg></a><span>Tapangco</span></span></h1>
+  </div>
+  <div class="mission">
+    <p>I build secure, privacy-first software across mobile, web and IoT, from Firebase backends with AES-256 encryption to Arduino sensors that report in real time. Currently studying BS Information Technology at Mapúa Malayan Colleges Laguna.</p>
+    <div class="soc">
+      <a href="https://github.com/luitpco"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path fill="#d4d4d4" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>Github</a>
+      <a href="mailto:marc.tapangco@gmail.com"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.333 2.333h9.334c.641 0 1.166.525 1.166 1.167v7c0 .642-.525 1.167-1.166 1.167H2.333A1.17 1.17 0 0 1 1.167 10.5v-7c0-.642.525-1.167 1.166-1.167Z" stroke="#d4d4d4" stroke-width="1.167"/><path d="M12.833 3.5 7 7.583 1.167 3.5" stroke="#d4d4d4" stroke-width="1.167"/></svg>Email</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="projects">
+  <div class="sechead"><p class="tag"><b>...</b>/Featured Selected Work ...</p><p class="tag" id="count">[01 — 03]</p></div>
+  <div class="track" id="track"></div>
+</section>
+
+<section class="sec" id="about" style="gap:48px">
+  <div class="intro">
+    <p class="tag"><b>...</b>/About me ...</p>
+    <h2>Hello! I'm Louie, an <em>IT student &amp; full-stack developer</em>. Dean's Lister three years running, building secure software for real people.</h2>
+  </div>
+  <div class="bento">
+    <div class="stack">
+      <div class="card"><h3>Programming</h3><p>Python / Java / C++ / C# / Dart / JavaScript / PHP</p></div>
+      <div class="card row"><div style="display:flex;flex-direction:column;gap:8px"><h3>Web &amp; Mobile</h3><p>HTML / CSS / ASP.NET / Flutter / Android Studio / Jetpack Compose / REST APIs</p></div><a class="round" href="#projects" aria-label="See projects">↗</a></div>
+      <div class="card"><h3>Databases &amp; Cloud</h3><p>MySQL / PostgreSQL / Oracle SQL Developer / Firebase (Auth, Firestore, Storage)</p></div>
+      <div class="sub">
+        <div class="note">"Security and privacy first: AES-256, careful data handling, and networks configured from the CLI up."</div>
+        <div class="card"><h3>Security &amp; Tools</h3><p>AES-256 / Cisco CLI / Packet Tracer / Git / Figma / Power BI / Tableau / XAMPP / Apache</p></div>
+      </div>
+    </div>
+    <div class="portrait">
+      <div class="ph"><img src="louie.jpg" alt="Portrait of Marc Louie Tapangco">
+        <div class="cap"><div><b>MARC LOUIE TAPANGCO</b><span>BSIT Student • Mapúa MCL, Laguna</span></div><i></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="experience" style="gap:40px">
+  <div class="workhead"><p class="tag"><b>...</b>/Track Record ...</p><h2>Work</h2></div>
+  <div class="rows">
+    <div class="r hi"><div class="d">Jul 2024 — Jul 2026<span class="dl">2 years</span></div><div class="o">Medical Staffing Resources</div><div class="w"><p>Recruitment &amp; Marketing Assistant<span>|</span><small>Sourcing, CV editing &amp; job marketing</small></p><span class="ar" aria-hidden="true"></span></div></div>
+    </div>
+  <div class="sum">Work Experience<b>2 years</b></div>
+</section>
+<section class="sec" id="education" style="gap:40px">
+  <div class="workhead"><p class="tag"><b>...</b>/Academic Background ...</p><h2>Education</h2></div>
+  <div class="rows">
+    <div class="r hi"><div class="d">2023 — 2027<span class="dl">Expected graduation</span></div><div class="o">Mapúa Malayan Colleges Laguna</div><div class="w"><p>BS Information Technology<span>|</span><small>Cabuyao, Laguna</small></p><span class="ar" aria-hidden="true"></span></div></div>
+  </div>
+  <div class="sum">Academic Standing<b>Dean's Lister, 3 consecutive years</b></div>
+  <div class="creds">
+    <div class="card"><h3>Certifications &amp; Training</h3><ul>
+      <li>Google Cloud Cybersecurity Certificate</li><li>CCNA: Introduction to Networks</li><li>Google Cloud Computing Foundations</li><li>AWS Full Stack Web Development</li><li>DICT Region IV-A Cybersecurity Training</li><li>Advanced Networking, Virtualization &amp; Security</li><li>Identity and Access Management (IAM) Explained</li></ul></div>
+    <div class="card"><h3>Scholarships &amp; Awards</h3><ul>
+      <li>Dean's Lister<small>3 consecutive years, 2023 — 2026</small></li><li>Provincial Scholarship Program<small>Scholar, 2023 — present</small></li><li>Academic Scholar<small>1st term, 2024 — 2025</small></li><li>CCIS Men's Volleyball<small>Participant, 2026</small></li><li>CCIS Men's Singles Table Tennis<small>Participant, 2026</small></li></ul></div>
+  </div>
+</section>
+
+<section class="sec" id="orgs" style="gap:40px">
+  <div class="workhead"><p class="tag"><b>...</b>/Academic Organizations ...</p><h2>Orgs</h2></div>
+  <div class="rows">
+    <div class="r hi"><div class="d">2025 — Present<span class="dl">Student chapter</span></div><div class="o">Mapúa MCL ACM</div><div class="w"><p>R&amp;D Member<span>|</span><small>Research &amp; development</small></p><span class="ar" aria-hidden="true"></span></div></div>
+    <div class="r"><div class="d">2026<span class="dl">Security org</span></div><div class="o">JISSA</div><div class="w"><p>Member<span>|</span><small>Junior Information System Security Association</small></p><span class="ar" aria-hidden="true"></span></div></div>
+    <div class="r"><div class="d">2025<span class="dl">Student org</span></div><div class="o">Mapúa MCL InfoTech Society</div><div class="w"><p>Member<span>|</span><small>ITSOC</small></p><span class="ar" aria-hidden="true"></span></div></div>
+  </div>
+  <div class="sum">Active Memberships<b>3 organizations</b></div>
+</section>
+
+
+<section class="contact" id="contact">
+  <div><p class="k">Open to internships &amp; projects</p><h2>Let's create something meaningful together.</h2><p>Whether you need a secure mobile backend, a full-stack web system, or an IoT prototype that talks to the cloud.</p></div>
+  <div class="mail"><a href="mailto:marc.tapangco@gmail.com">marc.tapangco@gmail.com</a><button type="button" id="copy">Copy Email</button></div>
+  <div class="meta"><span>Timezone: UTC+8 (Philippines)</span><span>•</span><span>Based in Laguna, PH</span></div>
+</section>
+</main>
+
+<footer><span>© 2026 Marc Louie Tapangco (luitpco). Designed with intention &amp; craft.</span><a href="#top">Back to top <b>↑</b></a></footer>
+</div>
+
+<script>
+{
+const P=[
+ {cap:1,k:"Capstone project",t:"KinSync",sub:"Privacy-Centric Family Coordination App",role:"Backend Developer · Jul 2026 — Present",chip:"Flutter + Firebase",d:"A family coordination mobile app for shared tasks, schedules, notes and documents, built with security and privacy at the core.",b:["Built the backend with Flutter and Firebase, focused on security and user privacy.","Integrated Firebase Authentication, Firestore and Storage for secure accounts and real-time data.","Implemented AES-256 encryption and PII extraction to protect sensitive documents."],tags:["Flutter","Firebase","Firestore","AES-256"]},
+ {k:"IoT project",t:"Smart Flood Monitor",sub:"IoT System",role:"IoT / Full-Stack Developer · 2026",chip:"Arduino + Android",d:"An IoT flood-monitoring prototype that reads water depth from a sensor and streams it to an Android app in real time.",b:["Built the prototype with an Arduino UNO R3, ESP8266 NodeMCU and a water-depth sensor.","Built an Android monitoring app with Jetpack Compose and Retrofit for real-time data.","Developed a PHP/MySQL backend for data transmission and storage."],tags:["Arduino","ESP8266","Jetpack Compose","PHP/MySQL"]},
+ {k:"Web system",t:"10th Ave. Studio",sub:"Dance Management System",role:"Full-Stack Developer · 2025",chip:"Full-stack web",d:"A web-based management system for a dance studio's class registrations and studio rental bookings.",b:["Built and integrated the frontend and backend, including UI, database and server-side logic.","Implemented class registration, rental booking and studio information management."],tags:["HTML/CSS","JavaScript","PHP","MySQL"]}
+];
+let i=0,open=false;
+const torus=`<svg viewBox="0 0 128 128" fill="none" aria-hidden="true"><defs><linearGradient id="g0" x1="12.6" y1="59.7" x2="115.4" y2="68.3" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset=".5" stop-color="#FF3366"/><stop offset="1" stop-color="#800020"/></linearGradient><linearGradient id="g1" x1="68.7" y1="12.6" x2="59.3" y2="115.4" gradientUnits="userSpaceOnUse"><stop stop-color="#800020"/><stop offset="1" stop-color="#fff"/></linearGradient></defs><path d="M23.3974 82.9333C29.3686 95.7385 52.4098 97.651 74.819 87.2015C97.2282 76.7519 110.574 57.872 104.603 45.0667C98.6314 32.2615 75.5902 30.3489 53.181 40.7985C30.7718 51.2481 17.4262 70.128 23.3974 82.9333Z" stroke="url(#g0)" stroke-width="7.68"/><ellipse cx="58" cy="76" rx="20" ry="40" transform="rotate(35 58 76)" stroke="url(#g1)" stroke-width="5.12"/></svg>`;
+const pad=n=>String(n+1).padStart(2,'0');
+const track=document.getElementById('track'),count=document.getElementById('count');
+const ghost=(j,dir)=>{const p=P[j];return `<button class="ghost" data-go="${dir}" aria-label="${dir<0?'Previous':'Next'} project: ${p.t}"><div><p class="k">${pad(j)} / ${p.k}${p.cap?' <span class="capg">★</span>':''}</p><h3>${p.t}<br>${p.sub}</h3><p>${p.d}</p></div><p class="nav">${dir<0?'← Previous Case':'Next Case →'}</p></button>`};
+const render=()=>{const p=P[i],n=P.length;
+ track.innerHTML=ghost((i+n-1)%n,-1)+`<article class="main${p.cap?' capc':''}"><div class="art">${torus}<span class="chip">${p.chip}</span>${p.cap?'<span class="capb">★ Capstone</span>':''}</div><div class="body"><div><p class="kick">${p.cap?'Featured capstone project':'Featured '+p.k}</p><h3>${p.t}: ${p.sub}</h3><p class="role">${p.role}</p>${open?`<ul>${p.b.map(x=>`<li>${x}</li>`).join('')}</ul>`:`<p>${p.d}</p>`}<div class="tags">${p.tags.map(x=>`<span>${x}</span>`).join('')}</div></div><div class="acts"><button class="btn" id="more" aria-expanded="${open}">${open?'Show less':'Read more'}</button><button class="nb" data-go="1" aria-label="Next project"><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><path d="M18.2441 15.248C18.0215 14.9863 17.7891 14.6016 17.5469 14.0938H17.9688C18.4648 14.6758 18.9922 15.1094 19.5508 15.3945V15.6055C18.9922 15.8906 18.4648 16.3242 17.9688 16.9062H17.5469C17.7891 16.3984 18.0215 16.0137 18.2441 15.752H12.4492V15.248H18.2441Z" fill="#fff"/></svg></button></div></div></article>`+ghost((i+1)%n,1);
+ count.textContent=`[${pad(i)} — ${pad(n-1)}]`;};
+track.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){i=(i+ +g.dataset.go+P.length)%P.length;open=false;render();return}if(e.target.closest('#more')){open=!open;render()}});
+render();
+const c=document.getElementById('copy');
+c.addEventListener('click',async()=>{try{await navigator.clipboard.writeText('marc.tapangco@gmail.com');c.textContent='Copied!'}catch(_){c.textContent='marc.tapangco@gmail.com'}setTimeout(()=>c.textContent='Copy Email',1800)});
+}
+</script>
+</body>
+</html>
