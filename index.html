@@ -58,10 +58,12 @@ main{display:flex;flex-direction:column;gap:160px}
 .sec{display:flex;flex-direction:column;gap:24px}
 .sechead .tag:last-child{white-space:nowrap}.sechead{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .marq{overflow:hidden;margin:0 -8px;padding:8px 0 24px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
-.belt{display:flex;align-items:flex-start;width:max-content;animation:marq 42s linear infinite}
-.marq:hover .belt,.marq:focus-within .belt,.marq.hold .belt{animation-play-state:paused}
+.marq{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain;cursor:grab}
+.marq::-webkit-scrollbar{display:none}
+.marq.drag{cursor:grabbing;user-select:none}.marq.drag a,.marq.drag img{pointer-events:none}
+.belt{display:flex;align-items:flex-start;width:max-content}
+.belt img,.belt a{-webkit-user-drag:none}
 .belt>.main{flex:none;width:clamp(290px,46vw,540px);margin:0 12px}
-@keyframes marq{to{transform:translateX(-50%)}}
 .track{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px;align-items:stretch}
 .ghost{grid-column:span 3;background:rgba(18,18,18,.6);border:1px solid rgba(255,255,255,.05);border-radius:24px;padding:25px;opacity:.4;display:flex;flex-direction:column;justify-content:space-between;min-height:290px;cursor:pointer;text-align:left;color:inherit;font:inherit;transition:opacity .2s}
 .ghost:hover,.ghost:focus-visible{opacity:.7;outline:none}
@@ -189,7 +191,7 @@ footer a b{color:var(--acc2);font-weight:400}
 @media(max-width:900px){.right{display:none}}
 @media(max-width:760px){.region{display:none}nav{order:3;width:100%;gap:20px}.main{flex-direction:column;padding:20px}.art{min-height:200px;flex-basis:auto}.r{grid-template-columns:minmax(0,1fr);gap:6px}.r .w{align-items:flex-start}.creds{grid-template-columns:minmax(0,1fr)}.l2{flex-direction:column-reverse;align-items:flex-start;gap:20px;padding-left:0}.sub{flex-direction:column}.card.row{align-items:flex-start}}
 @media(max-width:520px){header{gap:6px;padding:12px 0}.brand span{display:none}nav{gap:18px;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap;margin-right:-16px;padding-right:16px}nav::-webkit-scrollbar{display:none}nav a{font-size:13px;padding:6px 0;white-space:nowrap;flex:none}html{scroll-padding-top:96px}.big h1{font-size:clamp(28px,9vw,52px)}.workhead{flex-direction:column-reverse;align-items:flex-start}.workhead h2{font-size:clamp(28px,9vw,44px)}.wrap{padding:20px 16px 48px;gap:72px}main{gap:88px}.contact{padding:48px 20px 32px}.right .pill{display:none}}
-@media(prefers-reduced-motion:reduce){.marq{overflow-x:auto;-webkit-mask-image:none;mask-image:none}.belt>.clone{display:none}*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body id="top">
@@ -312,9 +314,27 @@ const track=document.getElementById('track'),count=document.getElementById('coun
 const ghost=(j,dir)=>{const p=P[j];return `<button class="ghost" data-go="${dir}" aria-label="${dir<0?'Previous':'Next'} project: ${p.t}"><div><p class="k">${pad(j)} / ${p.k}${p.cap?' <span class="capg">★</span>':''}</p><h3>${p.t}<br>${p.sub}</h3><p>${p.d}</p></div><p class="nav">${dir<0?'← Previous Case':'Next Case →'}</p></button>`};
 const marq=document.getElementById('marq'),opened=new Set();
 const card=(p,j,clone)=>{const o=opened.has(j);return `<article class="main${p.cap?' capc':''}${p.img?' hasimg':''}${clone?' clone':''}" data-j="${j}"${clone?' aria-hidden="true" inert':''}>${p.img?(p.url?`<a class="art shot" href="${p.url}" target="_blank" rel="noopener" aria-label="Open the ${p.t} landing page"><img src="${p.img}" alt="${p.t} landing page" loading="lazy"><span class="chip">${p.chip}</span><span class="live">Live site ↗</span>`:`<div class="art shot"><img src="${p.img}" alt="${p.t} project thumbnail" loading="lazy">${p.nochip?'':`<span class="chip">${p.chip}</span>`}`):`<div class="art">${torus}<span class="chip">${p.chip}</span>`}${p.cap?'<span class="capb">★ Capstone</span>':''}${p.img&&p.url?'</a>':'</div>'}<div class="body"><div><p class="kick">${pad(j)} / ${p.cap?'Capstone project':p.k}</p><h3>${p.t}: ${p.sub}</h3><p class="role">${p.role}</p>${o?`<ul>${p.b.map(x=>`<li>${x}</li>`).join('')}</ul>`:`<p>${p.d}</p>`}<div class="tags">${p.tags.map(x=>`<span>${x}</span>`).join('')}</div></div><div class="acts"><button class="btn more" aria-expanded="${o}">${o?'Show less':'Read more'}</button>${p.url?`<a class="btn ghostbtn" href="${p.url}" target="_blank" rel="noopener">Visit site ↗</a>`:''}</div></div></article>`};
-const render=()=>{track.innerHTML=P.map((p,j)=>card(p,j,0)).join('')+P.map((p,j)=>card(p,j,1)).join('');marq.classList.toggle('hold',opened.size>0)};
+const render=()=>{track.innerHTML=P.map((p,j)=>card(p,j,0)).join('')+P.map((p,j)=>card(p,j,1)).join('')};
 track.addEventListener('click',e=>{const m=e.target.closest('.more');if(!m)return;const j=+m.closest('[data-j]').dataset.j;opened.has(j)?opened.delete(j):opened.add(j);render();const b=track.querySelector(`.main:not(.clone)[data-j="${j}"] .more`);b&&b.focus({preventScroll:true})});
 render();
+{const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,SPEED=.04;
+let pos=0,last=0,hold=0,hov=false,off=true,drag=null,justDragged=false;
+const half=()=>track.scrollWidth/2,nap=ms=>{hold=Math.max(hold,performance.now()+ms)};
+const wrap=()=>{const h=half(),s=marq.scrollLeft;if(!h)return;if(s>=h+1){marq.scrollLeft=s-h;pos-=h}else if(s<1){marq.scrollLeft=s+h;pos+=h}};
+marq.addEventListener('scroll',()=>{if(Math.abs(marq.scrollLeft-pos)>2){nap(2500);pos=marq.scrollLeft}wrap()},{passive:true});
+marq.addEventListener('dragstart',e=>e.preventDefault());
+marq.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')hov=true});
+marq.addEventListener('pointerleave',()=>{hov=false;nap(600)});
+marq.addEventListener('touchstart',()=>nap(3000),{passive:true});
+marq.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0||e.target.closest('button'))return;drag={x:e.clientX,s:marq.scrollLeft,moved:false}});
+addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x;if(!drag.moved&&Math.abs(dx)>5){drag.moved=true;marq.classList.add('drag')}if(drag.moved){marq.scrollLeft=drag.s-dx;pos=marq.scrollLeft;wrap();drag.s=marq.scrollLeft+dx}});
+addEventListener('pointerup',()=>{if(!drag)return;justDragged=drag.moved;drag=null;marq.classList.remove('drag');nap(1500);setTimeout(()=>justDragged=false,0)});
+marq.addEventListener('click',e=>{if(justDragged){e.preventDefault();e.stopPropagation()}},true);
+new IntersectionObserver(es=>{off=!es[0].isIntersecting},{threshold:.2}).observe(marq);
+const tick=t=>{const dt=Math.min(64,t-(last||t));last=t;
+ if(!(reduce||hov||drag||off||document.hidden||opened.size||t<hold||marq.contains(document.activeElement)&&document.activeElement.matches(':focus-visible'))){pos+=dt*SPEED;const h=half();if(h&&pos>=h+1)pos-=h;marq.scrollLeft=pos}
+ requestAnimationFrame(tick)};
+marq.scrollLeft=pos=1;requestAnimationFrame(tick);}
 const links=[...document.querySelectorAll('nav a')];const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
 const spy=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}})},{rootMargin:'-45% 0px -50% 0px'});secs.forEach(s=>spy.observe(s));
 const f=document.getElementById('msg'),note=document.getElementById('note'),send=document.getElementById('send');
