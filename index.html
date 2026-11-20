@@ -157,6 +157,21 @@ main{display:flex;flex-direction:column;gap:160px}
 .contact .k{font:500 12px/16px var(--mono);color:var(--acc2);letter-spacing:1.2px;text-transform:uppercase}
 .contact h2{font:700 clamp(32px,4.5vw,48px)/1 var(--syne);letter-spacing:-.025em;margin:16px 0;text-wrap:balance}
 .contact p{color:var(--t4);max-width:600px;margin:0 auto}
+.msg{position:relative;z-index:1;width:100%;max-width:560px;display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left}
+.msg .full{grid-column:1/-1}
+.msg label{display:flex;flex-direction:column;gap:6px;font:500 11px/16px var(--mono);color:var(--t4);letter-spacing:.8px;text-transform:uppercase}
+.msg input,.msg textarea{background:var(--bg);border:1px solid var(--line2);border-radius:12px;padding:12px 14px;font:400 15px/22px Inter;color:var(--t2);text-transform:none;letter-spacing:0;width:100%;box-sizing:border-box;resize:vertical}
+.msg textarea{min-height:120px}
+.msg input:focus,.msg textarea:focus{outline:none;border-color:var(--acc2);box-shadow:0 0 0 3px rgba(194,24,63,.18)}
+.msg .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.msg .row{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.msg .fnote{font:400 12px/18px var(--mono);color:var(--t5);margin:0;max-width:none}
+.msg .fnote.ok{color:#7fd69a}.msg .fnote.err{color:#ff8a9e}
+.msg button{background:var(--acc);color:#fff;border:0;border-radius:12px;padding:12px 22px;font:600 13px/16px Inter;letter-spacing:.3px;cursor:pointer;min-height:44px}
+.msg button:hover{background:#9a0028}.msg button:disabled{opacity:.55;cursor:not-allowed}
+.msg button:focus-visible{outline:2px solid var(--acc2);outline-offset:3px}
+.or{position:relative;z-index:1;font:400 12px/16px var(--mono);color:var(--t5);letter-spacing:1px;text-transform:uppercase}
+@media(max-width:520px){.msg{grid-template-columns:1fr}.msg .row{flex-direction:column-reverse;align-items:stretch}.msg button{width:100%}}
 .mail{position:relative;z-index:1;display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--line2);border-radius:16px;padding:9px;flex-wrap:wrap;justify-content:center}
 .mail a{font:400 14px/20px var(--mono);color:var(--t3);padding:8px 16px;overflow-wrap:anywhere}
 .mail button{background:var(--acc);color:#fff;border:0;border-radius:12px;padding:10px 20px;font:500 12px/16px Inter;letter-spacing:.3px;cursor:pointer;min-height:40px}
@@ -262,6 +277,14 @@ footer a b{color:var(--acc2);font-weight:400}
 
 <section class="contact" id="contact">
   <div><p class="k">Open to internships &amp; projects</p><h2>Let's create something meaningful together.</h2><p>Whether you need a secure mobile backend, a full-stack web system, or an IoT prototype that talks to the cloud.</p></div>
+  <form class="msg" id="msg" novalidate>
+    <label>Name<input name="name" autocomplete="name" maxlength="80" required></label>
+    <label>Email<input name="email" type="email" autocomplete="email" maxlength="120" required></label>
+    <label class="full">Message<textarea name="message" maxlength="2000" required></textarea></label>
+    <label class="hp" aria-hidden="true">Leave empty<input name="_honey" tabindex="-1" autocomplete="off"></label>
+    <div class="row"><p class="fnote" id="note" role="status" aria-live="polite">One message per email address per day.</p><button type="submit" id="send">Send me a message</button></div>
+  </form>
+  <div class="or">or email directly</div>
   <div class="mail"><a href="mailto:marc.tapangco@gmail.com">marc.tapangco@gmail.com</a><button type="button" id="copy">Copy Email</button></div>
   <div class="meta"><span>Timezone: UTC+8 (Philippines)</span><span>•</span><span>Based in Laguna, PH</span></div>
 </section>
@@ -289,6 +312,21 @@ track.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){i
 render();
 const links=[...document.querySelectorAll('nav a')];const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
 const spy=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}})},{rootMargin:'-45% 0px -50% 0px'});secs.forEach(s=>spy.observe(s));
+const f=document.getElementById('msg'),note=document.getElementById('note'),send=document.getElementById('send');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
+const key=e=>'luitpco-msg:'+e.trim().toLowerCase();
+const say=(m,c)=>{note.textContent=m;note.className='fnote'+(c?' '+c:'')};
+f.addEventListener('submit',async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(f));
+if(d._honey)return;
+if(!d.name.trim()||!d.message.trim())return say('Please fill in your name and message.','err');
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email.trim()))return say('Please enter a valid email address.','err');
+let last=null;try{last=localStorage.getItem(key(d.email))}catch(_){}
+if(last===today())return say('You already sent a message today with this email. Please try again tomorrow.','err');
+send.disabled=true;send.textContent='Sending…';say('');
+try{const r=await fetch('https://formsubmit.co/ajax/marc.tapangco@gmail.com',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({name:d.name.trim(),email:d.email.trim(),message:d.message.trim(),_replyto:d.email.trim(),_subject:'New portfolio message from '+d.name.trim(),_template:'table',_captcha:'false'})});
+const j=await r.json().catch(()=>({}));
+if(r.ok&&String(j.success)==='true'){try{localStorage.setItem(key(d.email),today())}catch(_){}f.reset();say('Thanks! Your message was sent to Louie.','ok');send.textContent='Sent';return}
+throw new Error(j.message||'Send failed')}catch(err){say('Sorry, the message could not be sent. Please email directly below.','err');send.disabled=false;send.textContent='Send me a message'}});
 const c=document.getElementById('copy');
 c.addEventListener('click',async()=>{try{await navigator.clipboard.writeText('marc.tapangco@gmail.com');c.textContent='Copied!'}catch(_){c.textContent='marc.tapangco@gmail.com'}setTimeout(()=>c.textContent='Copy Email',1800)});
 }
